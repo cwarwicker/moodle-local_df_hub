@@ -158,7 +158,7 @@ class Site
 
   public function getPluginStats($component){
 
-    global $CFG;
+    global $CFG, $DB;
 
     $stats = array();
 
