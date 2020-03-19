@@ -27,6 +27,6 @@ https://www.gnu.org/licenses/gpl-3.0
 
 Support
 -------
-If you need any help using the block, or wish to report a bug or feature request, please use the issue tracking system: https://github.com/cwarwicker/moodle-block_gradetracker/issues
+If you need any help using the block, or wish to report a bug or feature request, please use the issue tracking system: https://github.com/cwarwicker/moodle-local_df_hub/issues
 
 If you want to help out with the development, feel free to submit commits for review.
