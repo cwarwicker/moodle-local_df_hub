@@ -91,7 +91,7 @@ function df_image_url($imagename, $component = 'moodle'){
 function df_time_ago($timestamp) {
 
   if ($timestamp < 1) return "never";
-  
+
    $strTime = array("second", "minute", "hour", "day", "month", "year");
    $length = array("60","60","24","30","12","10");
 
@@ -104,5 +104,67 @@ function df_time_ago($timestamp) {
         $diff = round($diff);
         return $diff . " " . $strTime[$i] . "(s) ago ";
    }
+
+}
+
+/**
+ * This function acts as a replacement for optional_param_array, but also allows for multidimensional arrays, instead of just one level.
+ *
+ * @param string $parname the name of the page parameter we want
+ * @param mixed $default the default value to return if nothing is found
+ * @param string $type expected type of parameter
+ * @param array $parent If passed through, this is the array which will be used, rather than checking in POST and GET
+ * @return array
+ * @throws coding_exception
+ */
+function df_optional_param_array_recursive($parname, $default, $type, $parent = null) {
+
+    // The majority of this function is core code taken from optional_param_array.
+    // If no parent is passed through, because we have not yet hit a multidimensional array, use the core code from optional_param_array and go through the normal process.
+    // Otherwise, just use the array we passed through and clean that instead.
+    if (is_null($parent)) {
+
+        if (func_num_args() != 3 or empty($parname) or empty($type)) {
+            throw new coding_exception('df_optional_array_param requires $parname, $default + $type to be specified (parameter: ' . $parname . ')');
+        }
+
+        // POST has precedence.
+        if (isset($_POST[$parname])) {
+            $param = $_POST[$parname];
+        } else if (isset($_GET[$parname])) {
+            $param = $_GET[$parname];
+        } else {
+            return $default;
+        }
+
+        if (!is_array($param)) {
+            debugging('df_optional_array_param() expects array parameters only: ' . $parname);
+            return $default;
+        }
+
+    } else {
+        $param = $parent;
+    }
+
+    $result = array();
+
+    foreach ($param as $key => $value) {
+
+        if (!preg_match('/^[a-z0-9_-]+$/i', $key)) {
+            debugging('Invalid key name in df_optional_array_param() detected: '.$key.', parameter: '.$parname);
+            continue;
+        }
+
+        // If the value is an array, recursively go down through the levels, cleaning them all and keep the array
+        // in the return value.
+        if (is_array($value)) {
+            $result[$key] = df_optional_param_array_recursive($parname, $default, $type, $value);
+        } else {
+            $result[$key] = clean_param($value, $type);
+        }
+
+    }
+
+    return $result;
 
 }
