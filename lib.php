@@ -150,8 +150,8 @@ function df_optional_param_array_recursive($parname, $default, $type, $parent = 
 
     foreach ($param as $key => $value) {
 
-        if (!preg_match('/^[a-z0-9_-]+$/i', $key)) {
-            debugging('Invalid key name in df_optional_array_param() detected: '.$key.', parameter: '.$parname);
+        if (!preg_match('/^[a-z0-9_ \-]+$/i', $key)) {
+            debugging('Invalid key name in df_optional_array_param() detected: ('.$key.'), parameter: '.$parname);
             continue;
         }
 
