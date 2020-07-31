@@ -13,97 +13,70 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-
-// Find all classes in /classes and include them
-df_require_classes('classes');
-
-
 /**
- * Require all the php classes in given directory & sub directories
- * @global type $CFG
- * @param type $dir
+ * Set of global functions to be used across the suite of DF plugins, to avoid code-duplication.
+ *
+ * @copyright   2019 onwards Conn Warwicker
+ * @package     local_df_hub
+ * @version     1.0
+ * @author      Conn Warwicker <conn@cmrwarwicker.com>
  */
-function df_require_classes($dir){
 
-    global $CFG;
-
-    // Find sub folders
-    if ($open = opendir($CFG->dirroot . '/local/df_hub/' . $dir))
-    {
-        while ( ($file = readdir($open)) !== false )
-        {
-
-            if ($file == '.' || $file == '..') continue;
-
-            if (strpos($file, '.php') === false)
-            {
-                df_require_classes($dir . '/' . $file);
-            }
-
-        }
-    }
-
-    // Now just load any files in this folder
-    foreach( glob("{$CFG->dirroot}/local/df_hub/{$dir}/*.php") as $file ){
-        require_once $file;
-    }
-
-}
+defined('MOODLE_INTERNAL') or die();
 
 /**
  * Convert to html entities
- * @param type $txt
- * @return type
+ * @param string $txt
+ * @param bool $nl2br Whether or not to run the text through nl2br()
+ * @return string
  */
-function df_html($txt, $nl2br = false)
-{
+function df_html($txt, $nl2br = false) {
     return ($nl2br) ? nl2br(  htmlspecialchars($txt, ENT_QUOTES) ) : htmlspecialchars($txt, ENT_QUOTES);
 }
 
 /**
  * Get an image URL from Moodle
  * This used to be using the normal $OUTPUT->image_url() or $OUTPUT->pix_url(), but it doesn't work in AJAX calls, as $OUTPUT is not initialised, so changed to $PAGE->theme
- * @global type $PAGE
- * @param type $imagename
- * @param type $component
- * @return type
+ * @param string $imagename
+ * @param string $component
+ * @return string
  */
-function df_image_url($imagename, $component = 'moodle'){
+function df_image_url($imagename, $component = 'moodle') {
 
     global $PAGE;
 
-    if (method_exists($PAGE->theme, 'image_url')){
+    if (method_exists($PAGE->theme, 'image_url')) {
         return $PAGE->theme->image_url($imagename, $component);
     } else {
         return $PAGE->theme->pix_url($imagename, $component);
     }
-
 
 }
 
 /**
  * Get how long ago a timestamp was
  * http://phppot.com/php/php-time-ago-function/
- * @param type $timestamp
- * @return type
+ * @param int $timestamp
+ * @return string
  */
 function df_time_ago($timestamp) {
 
-  if ($timestamp < 1) return "never";
+    if ($timestamp < 1) {
+        return "never";
+    }
 
-   $strTime = array("second", "minute", "hour", "day", "month", "year");
-   $length = array("60","60","24","30","12","10");
+    $strTime = array("second", "minute", "hour", "day", "month", "year");
+    $length = array(60, 60, 24, 30, 12, 10);
 
-   $currentTime = time();
-   if($currentTime >= $timestamp) {
+    $currentTime = time();
+    if ($currentTime >= $timestamp) {
         $diff = time() - $timestamp;
-        for($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++) {
+        for ($i = 0; $diff >= $length[$i] && $i < count($length) - 1; $i++) {
             $diff = $diff / $length[$i];
         }
         $diff = round($diff);
-        return $diff . " " . $strTime[$i] . "(s) ago ";
-   }
+        return $diff . " " . get_string('time:' . $strTime[$i], 'local_df_hub') . "(s) ago ";
+    }
 
 }
 

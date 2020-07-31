@@ -17,16 +17,16 @@
 /**
  * Version details.
  *
- * @package    local
- * @subpackage df_hub
- * @copyright  2019 Conn Warwicker
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright   2019 onwards Conn Warwicker
+ * @package     local_df_hub
+ * @version     1.0
+ * @author      Conn Warwicker <conn@cmrwarwicker.com>
  */
 
 defined('MOODLE_INTERNAL') || die;
 
 $plugin->component = 'local_df_hub';
-$plugin->version  = 2020031900;
+$plugin->version  = 2020031901;
 $plugin->release = 'v1.0';
 $plugin->cron = 0;
 $plugin->requires = 2017111300;

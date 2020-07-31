@@ -13,14 +13,12 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+defined('MOODLE_INTERNAL') or die();
+
 $string['pluginname'] = 'DuckFusion Hub';
-
 $string['error:template'] = 'Template file not found';
-
 $string['notwriteable'] = 'Not Writeable';
-
 $string['plugins'] = 'Plugins';
-
 $string['register'] = 'Register';
 $string['registeryoursite'] = 'Register Your Site';
 $string['registration:sitename'] = 'Site Name';
@@ -37,7 +35,6 @@ $string['registration:admin'] = 'Administrator';
 $string['registration:adminemail'] = 'Email Address';
 $string['registration:plugins'] = 'Installed Plugins';
 $string['registrationinfo'] = 'Registration Info';
-
 $string['systeminfo'] = 'System Info';
 $string['system:moodleversion'] = 'Moodle Version';
 $string['system:moodleversion:info'] = 'Your Moodle version will not be published';
@@ -52,5 +49,10 @@ $string['system:registered:task'] = 'Next update scheduled for: %s';
 $string['system:pluginstats'] = '%s Stats';
 $string['system:pluginstats:info'] = 'These stats will not be published';
 $string['system:uptodate'] = 'Up to date';
-
+$string['time:second'] = 'second';
+$string['time:minute'] = 'minute';
+$string['time:hour'] = 'hour';
+$string['time:day'] = 'day';
+$string['time:month'] = 'month';
+$string['time:year'] = 'year';
 $string['writeable'] = 'Writeable';
