@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 $plugin->component = 'local_df_hub';
-$plugin->version  = 2020031901;
+$plugin->version  = 2020081101;
 $plugin->release = 'v1.0';
 $plugin->cron = 0;
 $plugin->requires = 2017111300;
