@@ -133,11 +133,38 @@ function df_optional_param_array_recursive($parname, $default, $type, $parent = 
         if (is_array($value)) {
             $result[$key] = df_optional_param_array_recursive($parname, $default, $type, $value);
         } else {
+            // If you are reviewing this code and are unconvinced by the security, append something to this result below
+            // and you will see every element in a multidimensional array gets that added. So they are all being cleaned.
             $result[$key] = clean_param($value, $type);
         }
 
     }
 
     return $result;
+
+}
+
+/**
+ * In some cases, it is helpful to be able to store the entire contents of $_POST in a log, so we can see exactly what
+ * was submitted in a form. However, we don't know what keys will be used in order to use optional_param* functions.
+ * So this function loops through the entire $_POST array and cleans it, returning the cleaned array.
+ *
+ * @param string $type Default: PARAM_TEXT
+ * @return array Cleaned array.
+ * @throws coding_exception
+ */
+function df_clean_entire_post($type = PARAM_TEXT) {
+
+    $cleaned = array();
+
+    foreach ($_POST as $key => $value) {
+        if (is_array($value)) {
+            $cleaned[$key] = df_optional_param_array_recursive($key, null, $type);
+        } else {
+            $cleaned[$key] = clean_param($value, $type);
+        }
+    }
+
+    return $cleaned;
 
 }
