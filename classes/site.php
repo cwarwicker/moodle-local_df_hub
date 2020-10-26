@@ -76,7 +76,7 @@ class site
      */
     private $availablePlugins = array(
         'assignfeedback_gradetracker',
-        'block_bc_dashboard',
+        'block_df_dashboard',
         'block_elbp',
         'block_elbp_timetable',
         'block_gradetracker',
